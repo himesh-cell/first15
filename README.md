@@ -48,3 +48,46 @@ New university students face severe friction and disorientation during their fir
 - **24x7 Campus SOS & Emergency Desk**: One-click emergency contact cards for Campus Security, 24x7 Ambulance, Women Helpline, and Chief Warden.
 
 ---
+
+## 🚀 How to Start the Project
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm
+
+### Installation & Launch Steps
+
+1. **Open your terminal in the project directory**:
+   ```bash
+   cd "/Users/himesh/Desktop/Project int257"
+   ```
+
+2. **Install dependencies** (if not already installed):
+   ```bash
+   npm install
+   ```
+
+3. **Start the local development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in your browser**:
+   Click the URL displayed in the terminal, usually:
+   ```
+   http://localhost:5173
+   ```
+
+5. **Build for Production** (optional verification):
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 👥 Demo Profiles Included
+- **Rahul Verma**: Hosteller (BH-4, Room 412-B) • B.Tech CSE • Day 3 of 15 • Assigned Buddy: Aarav Sharma.
+- **Sneha Patel**: Day Scholar (Bus Route 14) • BBA • Day 4 of 15 • Assigned Buddy: Priya Nair.
+- **Ananya Sengupta**: Hosteller (GH-3, Room 518-A) • B.Des (Fashion) • Day 2 of 15 • Assigned Buddy: Tanya Verma.
+
+*Switch profiles seamlessly using the top right profile selector to observe how the entire application dynamically responds!*
