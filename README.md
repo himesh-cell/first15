@@ -2,6 +2,11 @@
 > **Course / Project INT257 • Problem Statement 03**  
 > An integrated, student-centric web platform solving newcomer struggles during the critical first two weeks of university life.
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-first15--rho.vercel.app-brightgreen?style=for-the-badge&logo=vercel)](https://first15-rho.vercel.app)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/himesh-cell/first15)
+
+🔗 **Live Deployment**: [https://first15-rho.vercel.app](https://first15-rho.vercel.app)
+
 ---
 
 ## 📌 Problem Statement
