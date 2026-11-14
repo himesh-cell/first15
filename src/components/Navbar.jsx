@@ -15,7 +15,9 @@ import {
   Users, 
   LayoutDashboard,
   Sparkles,
-  PhoneCall
+  PhoneCall,
+  LogOut,
+  Home
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -23,6 +25,8 @@ export default function Navbar() {
     activeProfile, 
     profiles, 
     switchProfile, 
+    logout,
+    setCurrentView,
     currentDay, 
     updateCurrentDay,
     activeTab, 
@@ -249,7 +253,31 @@ export default function Navbar() {
                     ))}
                   </div>
 
-                  <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 px-2 py-1">
+                  <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
+                    <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        setCurrentView('landing');
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                    >
+                      <Home className="w-4 h-4 text-blue-500" />
+                      <span>View Landing Page</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        logout();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out (Exit Portal)</span>
+                    </button>
+                  </div>
+
+                  <div className="mt-1 pt-1 border-t border-slate-100 dark:border-slate-800 px-2 py-1">
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center">
                       Task checklist automatically reconfigures for Hosteller vs Day Scholar.
                     </p>
@@ -287,6 +315,15 @@ export default function Navbar() {
               aria-label="Toggle Dark Mode"
             >
               {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+
+            {/* Quick Sign Out Button */}
+            <button
+              onClick={logout}
+              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 hover:text-red-600 dark:hover:text-red-400 transition-colors shadow-sm"
+              title="Sign Out / Exit Portal"
+            >
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
 

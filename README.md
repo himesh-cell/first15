@@ -28,6 +28,14 @@ New university students face severe friction and disorientation during their fir
 
 ### 2. Module Breakdown
 
+#### 🚪 Portal Entry – Landing Page & Student Authentication
+- **Public Orientation Landing Page**: Comprehensive overview highlighting key fresher friction points, 15-day roadmap stepper preview, module feature cards, interactive persona comparisons, and freshman FAQs.
+- **Student Authentication Portal**: Secure login gate supporting University Registration Numbers and passwords. Includes session persistence, device remembering, error handling, and 1-click demo profiles:
+  - **Rahul Verma (Hosteller)**: Registration No: `12401822` | Password: `student123`
+  - **Sneha Patel (Day Scholar)**: Registration No: `12409841` | Password: `student123`
+  - **Ananya Sengupta (Hosteller)**: Registration No: `12411099` | Password: `student123`
+- **Session Control**: Seamless sign-out, session restoration on refresh, and direct navigation toggle between the public landing page and the authenticated student dashboard.
+
 #### 🎓 Module 1 – Personalised Onboarding Checklist
 - **Categorized Milestones**:
   - **Academic Tasks**: UMS login activation, section timetable extraction, LMS & official email setup, Central Library RFID cards, Class Representative elections, mentor allocation.

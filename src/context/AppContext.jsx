@@ -14,6 +14,16 @@ import {
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  // Authentication & Navigation View State
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('first15_authenticated') === 'true';
+  });
+
+  const [currentView, setCurrentView] = useState(() => {
+    const isAuth = localStorage.getItem('first15_authenticated') === 'true';
+    return isAuth ? 'dashboard' : 'landing'; // 'landing', 'login', 'dashboard'
+  });
+
   // Profiles
   const [profiles, setProfiles] = useState(() => {
     const saved = localStorage.getItem('first15_profiles');
@@ -158,6 +168,65 @@ export const AppProvider = ({ children }) => {
   // Switch profile
   const switchProfile = (profileId) => {
     setActiveProfileId(profileId);
+  };
+
+  // Student Login Function
+  const login = (identifier, password) => {
+    if (!identifier || !password) {
+      return { success: false, message: 'Please enter both Student ID and Password.' };
+    }
+
+    const cleanId = identifier.trim().toLowerCase();
+    const cleanPass = password.trim();
+
+    // Match by registrationNo, id, or rollNo
+    const matched = profiles.find(p => 
+      p.registrationNo.toLowerCase() === cleanId ||
+      p.id.toLowerCase() === cleanId ||
+      p.rollNo.toLowerCase() === cleanId
+    );
+
+    if (!matched) {
+      return { 
+        success: false, 
+        message: 'Student Registration Number not found. Demo IDs: 12401822 (Rahul) or 12409841 (Sneha)' 
+      };
+    }
+
+    // Password validation (default: student123 or profile password)
+    const expectedPass = matched.password || 'student123';
+    if (cleanPass !== expectedPass && cleanPass !== 'student123') {
+      return { 
+        success: false, 
+        message: 'Incorrect password! Use "student123" for demo accounts.' 
+      };
+    }
+
+    // Success
+    setActiveProfileId(matched.id);
+    setIsAuthenticated(true);
+    setCurrentView('dashboard');
+    localStorage.setItem('first15_authenticated', 'true');
+    localStorage.setItem('first15_activeProfileId', matched.id);
+
+    return { success: true, profile: matched };
+  };
+
+  // Quick 1-click Demo Login
+  const quickLogin = (profileId) => {
+    const matched = profiles.find(p => p.id === profileId) || profiles[0];
+    setActiveProfileId(matched.id);
+    setIsAuthenticated(true);
+    setCurrentView('dashboard');
+    localStorage.setItem('first15_authenticated', 'true');
+    localStorage.setItem('first15_activeProfileId', matched.id);
+  };
+
+  // Student Logout
+  const logout = () => {
+    setIsAuthenticated(false);
+    setCurrentView('landing');
+    localStorage.removeItem('first15_authenticated');
   };
 
   // Add custom profile
@@ -309,6 +378,13 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        currentView,
+        setCurrentView,
+        login,
+        quickLogin,
+        logout,
         profiles,
         activeProfile,
         activeProfileId,

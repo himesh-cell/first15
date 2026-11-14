@@ -8,11 +8,31 @@ import CampusGuidanceHub from './components/Module2CampusGuidance/CampusGuidance
 import BuddySupportHub from './components/Module3BuddySupport/BuddySupportHub';
 import SosEmergencyModal from './components/Common/SosEmergencyModal';
 import ReadinessCertificateModal from './components/Module1Checklist/ReadinessCertificateModal';
+import LandingPage from './components/Landing/LandingPage';
+import LoginPage from './components/Auth/LoginPage';
 import { GraduationCap, Heart, Sparkles, RefreshCw } from 'lucide-react';
 
 function AppContent() {
-  const { activeTab, resetAllProgress, activeProfile } = useApp();
+  const { 
+    currentView, 
+    setCurrentView, 
+    isAuthenticated, 
+    activeTab, 
+    resetAllProgress, 
+    activeProfile 
+  } = useApp();
 
+  // If user is on landing page (or not authenticated and not explicitly on login)
+  if (currentView === 'landing' || (!isAuthenticated && currentView !== 'login')) {
+    return <LandingPage onGoToLogin={() => setCurrentView('login')} />;
+  }
+
+  // If user is on login page
+  if (currentView === 'login' || (!isAuthenticated && currentView === 'login')) {
+    return <LoginPage onBackToLanding={() => setCurrentView('landing')} />;
+  }
+
+  // Authenticated Student Dashboard
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       
@@ -52,6 +72,15 @@ function AppContent() {
           </div>
 
           <div className="flex items-center gap-4">
+            <button
+              onClick={() => setCurrentView('landing')}
+              className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+            >
+              Public Landing Page
+            </button>
+
+            <span className="text-slate-300 dark:text-slate-700">|</span>
+
             <button
               onClick={() => {
                 if (window.confirm("Reset all tasks, tickets and chats to initial demo state?")) {
