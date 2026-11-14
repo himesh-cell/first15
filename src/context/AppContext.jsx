@@ -229,6 +229,107 @@ export const AppProvider = ({ children }) => {
     localStorage.removeItem('first15_authenticated');
   };
 
+  // Register New Student Account
+  const register = (studentData) => {
+    if (!studentData.name || !studentData.registrationNo || !studentData.password) {
+      return { success: false, message: 'Please provide Name, Registration Number, and Password.' };
+    }
+
+    const regNo = studentData.registrationNo.trim();
+    // Check if registrationNo already exists
+    const exists = profiles.some(p => p.registrationNo.toLowerCase() === regNo.toLowerCase());
+    if (exists) {
+      return { success: false, message: `Registration No. ${regNo} is already registered! Please sign in.` };
+    }
+
+    const isHosteller = studentData.studentType === 'Hosteller';
+    const newProfile = {
+      id: `student-${regNo}`,
+      name: studentData.name.trim(),
+      registrationNo: regNo,
+      password: studentData.password.trim(),
+      rollNo: studentData.rollNo?.trim() || `RK24${regNo.slice(-3).toUpperCase()}`,
+      program: studentData.program?.trim() || 'B.Tech Computer Science & Engineering',
+      school: studentData.school?.trim() || 'School of Engineering & Technology',
+      studentType: studentData.studentType || 'Hosteller',
+      currentDay: 1,
+      avatar: studentData.avatar || (isHosteller 
+        ? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80'
+        : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80'),
+      hometown: studentData.hometown?.trim() || 'Campus Resident',
+      assignedBuddyId: 'buddy-aarav',
+      academicMentor: {
+        name: 'Dr. Meenakshi Sundaram',
+        designation: 'First-Year Academic Mentor',
+        cabin: 'Block 34, Cabin 408',
+        email: 'mentor.cse@university.edu.in'
+      },
+      hostelDetails: isHosteller ? {
+        hostelName: studentData.hostelName?.trim() || 'Boys Hostel 2 (BH-2)',
+        roomNo: studentData.roomNo?.trim() || '204-A',
+        wardenName: 'Dr. R. K. Sharma',
+        wardenContact: '+91 98765 43210',
+        messSlot: 'North Indian Mess - Slot 1'
+      } : undefined,
+      commuteDetails: !isHosteller ? {
+        busRouteNo: studentData.busRouteNo?.trim() || 'Route 07 (City Centre)',
+        pickupPoint: studentData.pickupPoint?.trim() || 'Central Bus Stop (7:20 AM)',
+        busCoordinator: 'Mr. Gurpreet Singh (+91 98140 11223)',
+        parkingPermit: 'Day Scholar Permit Issued'
+      } : undefined
+    };
+
+    setProfiles(prev => [...prev, newProfile]);
+    setActiveProfileId(newProfile.id);
+    setIsAuthenticated(true);
+    setCurrentView('dashboard');
+    localStorage.setItem('first15_authenticated', 'true');
+    localStorage.setItem('first15_activeProfileId', newProfile.id);
+
+    return { success: true, profile: newProfile };
+  };
+
+  // Reset Student Password
+  const resetPassword = (identifier, newPassword) => {
+    if (!identifier || !newPassword) {
+      return { success: false, message: 'Please provide your Registration Number and New Password.' };
+    }
+
+    const cleanId = identifier.trim().toLowerCase();
+    const cleanPass = newPassword.trim();
+
+    if (cleanPass.length < 4) {
+      return { success: false, message: 'New password must be at least 4 characters.' };
+    }
+
+    const profileIndex = profiles.findIndex(p => 
+      p.registrationNo.toLowerCase() === cleanId ||
+      p.id.toLowerCase() === cleanId ||
+      p.rollNo.toLowerCase() === cleanId
+    );
+
+    if (profileIndex === -1) {
+      return { 
+        success: false, 
+        message: 'Student Registration Number not found. Check demo accounts: 12401822 or 12409841.' 
+      };
+    }
+
+    const updatedProfiles = [...profiles];
+    updatedProfiles[profileIndex] = {
+      ...updatedProfiles[profileIndex],
+      password: cleanPass
+    };
+
+    setProfiles(updatedProfiles);
+    localStorage.setItem('first15_profiles', JSON.stringify(updatedProfiles));
+
+    return { 
+      success: true, 
+      message: `Password reset successfully for ${updatedProfiles[profileIndex].name}! You can now log in.` 
+    };
+  };
+
   // Add custom profile
   const addProfile = (newProfile) => {
     const created = {
@@ -384,6 +485,8 @@ export const AppProvider = ({ children }) => {
         setCurrentView,
         login,
         quickLogin,
+        register,
+        resetPassword,
         logout,
         profiles,
         activeProfile,
