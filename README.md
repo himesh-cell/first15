@@ -4,6 +4,9 @@
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-first15--rho.vercel.app-brightgreen?style=for-the-badge&logo=vercel)](https://first15-rho.vercel.app)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/himesh-cell/first15)
+[![Next.js 14](https://img.shields.io/badge/Framework-Next.js_14-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![React 18](https://img.shields.io/badge/Library-React_18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 
 🔗 **Live Deployment**: [https://first15-rho.vercel.app](https://first15-rho.vercel.app)
 

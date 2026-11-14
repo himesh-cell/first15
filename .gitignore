@@ -4,6 +4,8 @@ node_modules
 .pnp.js
 
 # Production build outputs
+.next
+out
 dist
 dist-ssr
 *.local
